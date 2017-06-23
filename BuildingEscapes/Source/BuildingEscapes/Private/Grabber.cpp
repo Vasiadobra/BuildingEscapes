@@ -2,6 +2,7 @@
 
 #include "Grabber.h"
 #include "BuildingEscapes.h"
+#include "DrawDebugHelpers.h"
 #define OUT
 
 
@@ -35,8 +36,25 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotaion
 	);
-	UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s "),
+	
+	/*UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s "),
 		*PlayerViewPointLocation.ToString() ,
-		*PlayerViewPointRotaion.ToString());
+		*PlayerViewPointRotaion.ToString());*/
+
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotaion.Vector() *Reach;
+
+	DrawDebugLine(
+		GetWorld(),
+		PlayerViewPointLocation,
+		LineTraceEnd,
+		FColor(255, 0, 0),
+		false,
+		0.f,
+		0.f,
+		10.f
+	);
+
+
+
 }
 
