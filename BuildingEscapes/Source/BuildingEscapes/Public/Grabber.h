@@ -7,6 +7,7 @@
 #include "Grabber.generated.h"
 
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPES_API UGrabber : public UActorComponent
 {
@@ -19,6 +20,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
 
 public:	
 	// Called every frame
