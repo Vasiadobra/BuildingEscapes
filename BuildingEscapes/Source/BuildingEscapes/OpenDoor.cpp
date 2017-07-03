@@ -3,6 +3,7 @@
 #include "OpenDoor.h"
 #define OUT
 
+
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
@@ -26,24 +27,8 @@ void UOpenDoor::BeginPlay()
 
 		UE_LOG(LogTemp, Error, TEXT(" %s is missing PresurePlate"), *GetWorld()->GetName())
 	}
-	
 
 }
-
-void UOpenDoor::OpenDoor()
-{
-
-	Owner->SetActorRotation(FRotator(0.f, OpenAngle, 0.f));
-}
-
-void UOpenDoor::CloseDoor()
-{
-	Owner->SetActorRotation(FRotator(0.f, 12.0f, 0.f));
-
-
-}
-
-
 
 
 // Called every frame
@@ -52,16 +37,15 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	
-	if (GetTotalMassOfActorsOnPlate() > 30.f)
+	if (GetTotalMassOfActorsOnPlate() > TriggerMass)
 	{
-		OpenDoor();
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+		OnOpen.Broadcast();
+		
 	}
-	if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime > DoorCloseDelay)
+	else
 	{
-		CloseDoor();
+		OnClose.Broadcast();
 	}
-
 }
 
 float UOpenDoor::GetTotalMassOfActorsOnPlate()
